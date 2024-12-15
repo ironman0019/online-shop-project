@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Content\MenuController;
 use App\Http\Controllers\Admin\Content\PageController;
 use App\Http\Controllers\Admin\Ticket\TicketController;
 use App\Http\Controllers\Admin\Content\CommentController;
+use App\Http\Controllers\Admin\DashbordController;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Admin\Market\DeliveryController;
 use App\Http\Controllers\Admin\Market\PeymentController;
@@ -28,6 +29,8 @@ Route::get('/', function () {
 require __DIR__.'/auth.php';
 
 Route::prefix('admin')->name('admin.')->group(function() {
+
+    Route::get('/', DashbordController::class);
 
     Route::prefix('setting')->name('setting.')->group(function() {
         Route::resource('setting', SettingController::class);
