@@ -3,4 +3,5 @@
     <script src="{{ asset('admin-assets/assets/js/popper.js') }}"></script>
     <script src="{{ asset('admin-assets/assets/js/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('admin-assets/assets/js/grid.js') }}"></script>
+    <script src="{{ asset('admin-assets/sweetalert/sweetalert2.min.js') }}"></script>
 @show

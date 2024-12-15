@@ -3,5 +3,6 @@
     <link rel="stylesheet" href="{{ asset('admin-assets/assets/fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/assets/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/assets/css/grid.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin-assets/sweetalert/sweetalert2.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/assets/css/style.css') }}">
 @show

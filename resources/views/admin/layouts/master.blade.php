@@ -26,6 +26,8 @@
     </section>
 
     @include('admin.layouts.scripts')
+    @include('admin.alerts.sweetalert.success')
+    @include('admin.alerts.sweetalert.error')
 </body>
 
 </html>
