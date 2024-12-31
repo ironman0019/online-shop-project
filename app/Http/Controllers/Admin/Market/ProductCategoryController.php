@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Market\StoreProductCategoryRequest;
+use App\Http\Requests\Admin\Market\UpdateProductCategoryRequest;
 use App\Models\Market\ProductCategory;
 use Illuminate\Http\Request;
 
@@ -49,15 +50,17 @@ class ProductCategoryController extends Controller
      */
     public function edit(ProductCategory $productCategory)
     {
-        //
+        return view('admin.market.product-category.edit', compact('productCategory'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductCategory $productCategory)
+    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
-        //
+        $inputs = $request->all();
+        $productCategory->update($inputs);
+        return to_route('admin.market.product-category.index')->with('swal-success', 'دسته بندی با موفقیت ویرایش شد');
     }
 
     /**
@@ -65,6 +68,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
-        //
+        $productCategory->delete();
+        return back()->with('swal-success', 'دسته بندی با موفقیت حذف شد');
     }
 }
