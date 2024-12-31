@@ -47,13 +47,17 @@
                     <td>
                         <div class="d-flex">
                             <div class="mx-2">
-                                <a href="#"
-                                    class="text-danger">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                <form action="{{ route('admin.market.product-category.destroy', $category) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                             <div class="mx-2">
-                                <a href="#"
+                                <a href="{{ route('admin.market.product-category.edit', $category) }}"
                                     class="text-warning">
                                     <i class="fa fa-edit"></i>
                                 </a>
