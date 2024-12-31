@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Market\StoreBrandRequest;
 use App\Models\Market\Brand;
+use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -13,7 +15,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brands = Brand::all();
+        return view('admin.market.brand.index', compact('brands'));
     }
 
     /**
@@ -21,15 +24,26 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.market.brand.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBrandRequest $request, ImageUploadService $imageUploadService)
     {
-        //
+        $inputs = $request->all();
+
+        if($request->hasFile('logo')) {
+            $result = $imageUploadService->uploadImage($request->file('logo'));
+            if($result === false) {
+                return back()->with('swal-error', 'خطا در آپلود عکس');
+            }
+            $inputs['logo'] = $result;
+        }
+
+        Brand::create($inputs);
+        return to_route('admin.market.brand.index')->with('swal-success', 'برند با موفقیت ساخته شد');
     }
 
     /**
