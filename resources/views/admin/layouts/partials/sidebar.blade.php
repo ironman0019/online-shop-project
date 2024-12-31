@@ -14,6 +14,12 @@
                 <span>دسته ها</span>
             </a>
 
+
+            <a href="{{ route('admin.market.brand.index') }}" class="sidebar-link">
+                <i class="fas fa-object-ungroup"></i>
+                <span>برند ها</span>
+            </a>
+
             <section class="sidebar-part-title">بخش محتوی</section>
 
             <a href="#" class="sidebar-link">
