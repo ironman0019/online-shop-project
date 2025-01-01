@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Market\StoreBrandRequest;
+use App\Http\Requests\Admin\Market\UpdateBrandRequest;
 use App\Models\Market\Brand;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
+        $brands = Brand::paginate(3);
         return view('admin.market.brand.index', compact('brands'));
     }
 
@@ -59,15 +60,29 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        return view('admin.market.brand.edit', compact('brand'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Brand $brand)
+    public function update(UpdateBrandRequest $request, Brand $brand, ImageUploadService $imageUploadService)
     {
-        //
+        $inputs = $request->all();
+
+        if($request->hasFile('logo')) {
+            // Remove old image
+            $imageUploadService->removeImage($brand->logo);
+
+            $result = $imageUploadService->uploadImage($request->file('logo'));
+            if($result === false) {
+                return back()->with('swal-error', 'خطا در آپلود عکس');
+            }
+            $inputs['logo'] = $result;
+        }
+
+        $brand->update($inputs);
+        return to_route('admin.market.brand.index')->with('swal-success', 'برند با موفقیت ویرایش شد');
     }
 
     /**
@@ -75,6 +90,7 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+        return back()->with('swal-success', 'برند با موفقیت حذف شد');
     }
 }
