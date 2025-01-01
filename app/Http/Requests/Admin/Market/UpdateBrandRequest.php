@@ -24,7 +24,7 @@ class UpdateBrandRequest extends FormRequest
         return [
             'persian_name' => 'required|max:120|min:2|regex:/^[ا-ی\-۰-۹ء-ي., ]+$/u',
             'english_name' => 'required|max:120|min:2|regex:/^[a-zA-Z0-9\., ]+$/u',
-            'logo' => 'required|image|mimes:png,jpg,jpeg,gif'
+            'logo' => 'image|mimes:png,jpg,jpeg,gif'
         ];
     }
 }
