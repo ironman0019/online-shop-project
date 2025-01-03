@@ -22,9 +22,19 @@
 
             <section class="sidebar-part-title">بخش محتوی</section>
 
-            <a href="#" class="sidebar-link">
-                <i class="fas fa-bars"></i>
-                <span>دسته ها</span>
+            <a href="{{ route('admin.content.blog.index') }}" class="sidebar-link">
+                <i class="fas fa-blog"></i>
+                <span>بلاگ</span>
+            </a>
+
+            <a href="{{ route('admin.content.faq.index') }}" class="sidebar-link">
+                <i class="fas fa-question"></i>
+                <span>سوالات متداول</span>
+            </a>
+
+            <a href="{{ route('admin.content.page.index') }}" class="sidebar-link">
+                <i class="fas fa-landmark"></i>
+                <span>صفحات</span>
             </a>
 
             <section class="sidebar-group-link">
