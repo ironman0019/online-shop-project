@@ -41,6 +41,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::resource('faq', FaqController::class);
         Route::resource('page', PageController::class);
         Route::resource('comment', CommentController::class);
+        Route::get('comment/approved/{comment}', [CommentController::class, 'approved'])->name('comment.approved');
         Route::resource('blog', BlogController::class);
     });
 
