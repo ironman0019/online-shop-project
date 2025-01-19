@@ -13,7 +13,31 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::paginate(5);
+        $view = view('admin.content.comment.index', compact('comments'));
+
+        // Update comment status
+        $comments = Comment::where('status', '0')->get();
+        foreach($comments as $comment) {
+            $comment->status = 1;
+            $comment->save();
+        }
+
+        return $view;
+    }
+
+    // Approve or Reject comment
+    public function approved(Comment $comment)
+    {
+        if($comment->status == 1) {
+            $comment->status = 2;
+
+        } elseif($comment->status == 2) {
+            $comment->status = 1;
+        }
+        
+        $comment->save();
+        return back();
     }
 
     /**
@@ -37,7 +61,8 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        $comments = $comment->children()->get();
+        return view('admin.content.comment.show', compact('comments', 'comment'));
     }
 
     /**
