@@ -30,7 +30,7 @@
                             <label for="title" class="form-label">عنوان</label>
                             <input type="text" name="title" class="form-control" id="title"
                                 value="{{ old('title', $blog->title) }}">
-                            @error('name')
+                            @error('title')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
