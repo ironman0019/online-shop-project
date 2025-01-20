@@ -58,7 +58,12 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::resource('product-category', ProductCategoryController::class);
         Route::resource('brand', BrandController::class);
         Route::resource('product', ProductController::class);
-        Route::resource('product-image/{product}', ProductImageController::class);
+        Route::get('product-image/{product}', [ProductImageController::class, 'index'])->name('product-image.index');
+        Route::get('product-image/{product}/store', [ProductImageController::class, 'create'])->name('product-image.create');
+        Route::post('product-image/{product}/store', [ProductImageController::class, 'store'])->name('product-image.store');
+        Route::get('product-image/{productImage}/{product}/edit', [ProductImageController::class, 'edit'])->name('product-image.edit');
+        Route::put('product-image/{productImage}/{product}/edit', [ProductImageController::class, 'update'])->name('product-image.update');
+        Route::delete('product-image/{productImage}/destroy', [ProductImageController::class, 'destroy'])->name('product-image.destroy');
         Route::resource('coupan', Coupan::class);
         Route::resource('delivery', DeliveryController::class);
         Route::resource('peyment', PeymentController::class);
