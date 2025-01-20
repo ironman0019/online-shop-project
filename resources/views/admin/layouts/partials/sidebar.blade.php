@@ -75,17 +75,16 @@
                 </section>
             </section>
 
-            <section class="sidebar-part-title">بخش کاربران</section>
+            <section class="sidebar-part-title">بخش تنظیمات</section>
 
             <section class="sidebar-group-link">
                 <section class="sidebar-dropdown-toggle">
                     <i class="fas fa-cogs icon"></i>
-                    <span>تنظیمات منو</span>
+                    <span>تنظیمات سایت</span>
                     <i class="fas fa-angle-left angle"></i>
                 </section>
                 <section class="sidebar-dropdown">
-                    <a href="#">منوی هدر</a>
-                    <a href="#">منوی فوتر</a>
+                    <a href="{{ route('admin.setting.index') }}">تنظیمات اصلی</a>
                 </section>
             </section>
 
