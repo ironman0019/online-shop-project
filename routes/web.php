@@ -33,7 +33,9 @@ Route::prefix('admin')->name('admin.')->group(function() {
     Route::get('/', DashbordController::class);
 
     Route::prefix('setting')->name('setting.')->group(function() {
-        Route::resource('setting', SettingController::class);
+        Route::get('/', [SettingController::class, 'index'])->name('index');
+        Route::get('/create', [SettingController::class, 'create'])->name('create');
+        Route::post('/store', [SettingController::class, 'storeOrUpdate'])->name('store');
     });
 
     Route::prefix('content')->name('content.')->group(function() {
