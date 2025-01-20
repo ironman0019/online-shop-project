@@ -65,6 +65,12 @@
                                     <i class="fa fa-eye"></i>
                                 </a>
                             </div>
+                            <div class="mx-2">
+                                <a href="{{ route('admin.market.product-image.index', $product) }}"
+                                    class="text-success">
+                                    <i class="fa fa-image"></i>
+                                </a>
+                            </div>
                         </div>
                     </td>
                 </tr>
