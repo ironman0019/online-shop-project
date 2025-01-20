@@ -23,7 +23,7 @@ return new class extends Migration
             $table->decimal('height', 10, 2)->nullable();
             $table->bigInteger('price');
             $table->text('tags');
-            $table->bigInteger('sold_number');
+            $table->bigInteger('sold_number')->default(0);
             $table->bigInteger('marketable_number');
             $table->tinyInteger('marketable')->default(0);
             $table->tinyInteger('status')->default(0);
