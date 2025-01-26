@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Ticket\TicketController;
 use App\Http\Controllers\Admin\Content\CommentController;
 use App\Http\Controllers\Admin\DashbordController;
 use App\Http\Controllers\Admin\Market\BrandController;
+use App\Http\Controllers\Admin\Market\CoupanController;
 use App\Http\Controllers\Admin\Market\DeliveryController;
 use App\Http\Controllers\Admin\Market\PeymentController;
 use App\Http\Controllers\Admin\Market\ProductCategoryController;
@@ -19,7 +20,6 @@ use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Home\Customer\AddressController;
-use App\Models\Market\Coupan;
 
 Route::get('/', function () {
     return view('welcome');
@@ -64,7 +64,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::get('product-image/{productImage}/{product}/edit', [ProductImageController::class, 'edit'])->name('product-image.edit');
         Route::put('product-image/{productImage}/{product}/edit', [ProductImageController::class, 'update'])->name('product-image.update');
         Route::delete('product-image/{productImage}/destroy', [ProductImageController::class, 'destroy'])->name('product-image.destroy');
-        Route::resource('coupan', Coupan::class);
+        Route::resource('coupan', CoupanController::class);
         Route::resource('delivery', DeliveryController::class);
         Route::resource('peyment', PeymentController::class);
     });
