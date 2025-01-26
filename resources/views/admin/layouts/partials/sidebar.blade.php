@@ -25,6 +25,11 @@
                 <span>محصولات</span>
             </a>
 
+            <a href="{{ route('admin.market.coupan.index') }}" class="sidebar-link">
+                <i class="fas fa-dollar-sign"></i>
+                <span>تخفیفات</span>
+            </a>
+
             <section class="sidebar-part-title">بخش محتوی</section>
 
             <a href="{{ route('admin.content.blog.index') }}" class="sidebar-link">
