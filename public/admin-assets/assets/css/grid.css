@@ -7,7 +7,7 @@
     line-height: 3.5rem;
     display: flex;
     justify-content: space-around;
-    z-index: 1000;
+    z-index: 10000000;
     align-items: stretch;
 }
 
