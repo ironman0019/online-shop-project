@@ -206,6 +206,7 @@ return [
         'copan' => 'کد تخفیف',
         'subject' => 'عنوان',
         'key_words' => 'لغات کلیدی',
+        'amount_type' => 'نوع تخفیف',
 
     ],
 ];
