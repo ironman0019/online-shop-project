@@ -13,7 +13,8 @@ class PeymentController extends Controller
      */
     public function index()
     {
-        //
+        $peyments = Peyment::paginate(6);
+        return view('admin.market.peyment.index', compact('peyments'));
     }
 
     /**
