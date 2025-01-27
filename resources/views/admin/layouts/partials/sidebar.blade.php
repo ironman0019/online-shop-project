@@ -35,6 +35,11 @@
                 <span>روش ارسال</span>
             </a>
 
+            <a href="{{ route('admin.market.peyment.index') }}" class="sidebar-link">
+                <i class="fas fa-credit-card"></i>
+                <span>پرداخت ها</span>
+            </a>
+
             <section class="sidebar-part-title">بخش محتوی</section>
 
             <a href="{{ route('admin.content.blog.index') }}" class="sidebar-link">
