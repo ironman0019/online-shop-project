@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin\Ticket;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Ticket\StoreTicketRequest;
+use App\Http\Requests\Admin\Ticket\UpdateTicketRequest;
 use App\Models\Ticket\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -13,7 +16,8 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
+        $tickets = Ticket::all();
+        return view('admin.ticket.tickets.index', compact('tickets'));
     }
 
     /**
@@ -27,9 +31,19 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTicketRequest $request)
     {
-        //
+        $inputs = $request->all();
+
+        $parentTicket = Ticket::find($inputs['parent_id']);
+        $inputs['subject'] = $parentTicket->subject;
+        $inputs['status'] = $parentTicket->status;
+        $inputs['reference_id'] = $parentTicket->admin->user->id;
+        $inputs['user_id'] = Auth::user()->id;
+        $inputs['category_id'] = $parentTicket->category->id;
+
+        Ticket::create($inputs);
+        return to_route('admin.tickets.ticket.index')->with('swal-success', 'تیکت با موفقیت ساخته شد');
     }
 
     /**
@@ -37,7 +51,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        return view('admin.ticket.tickets.show', compact('ticket'));
     }
 
     /**
@@ -45,15 +59,22 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        return view('admin.ticket.tickets.edit', compact('ticket'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        //
+        if($ticket->parent_id == null) {
+            return to_route('admin.tickets.ticket.index');
+        }
+
+        $inputs = $request->all();
+
+        $ticket->update($inputs);
+        return to_route('admin.tickets.ticket.index')->with('swal-success', 'تیکت با موفقیت ویرایش شد');
     }
 
     /**
@@ -61,6 +82,36 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+        return back()->with('swal-success', 'تیکت با موفقیت حذف شد');
+    }
+
+    // Change status
+    public function status(Ticket $ticket)
+    {
+
+        if($ticket->parent_id != null) {
+            return to_route('admin.tickets.ticket.index');
+        }
+
+        $ticketChildren = $ticket->children()->get();
+
+        if ($ticket->status) {
+            $ticket->status = 0;
+            foreach($ticketChildren as $ticketChild) {
+                $ticketChild->status = 0;
+                $ticketChild->save();
+            }
+
+        } else {
+            $ticket->status = 1;
+            foreach($ticketChildren as $ticketChild) {
+                $ticketChild->status = 1;
+                $ticketChild->save();
+            }
+        }
+
+        $ticket->save();
+        return back();
     }
 }
