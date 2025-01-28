@@ -16,7 +16,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::all();
+        $tickets = Ticket::whereNull('parent_id')->get();
         return view('admin.ticket.tickets.index', compact('tickets'));
     }
 
