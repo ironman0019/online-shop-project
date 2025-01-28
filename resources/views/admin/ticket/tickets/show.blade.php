@@ -27,10 +27,12 @@
                     <th scope="col">کاربر</th>
                     <th scope="col">دسته بندی</th>
                     <th scope="col">پاسخ به </th>
+                    <th scope="col">تنظیمات</th>
+                    <th scope="col">فایل</th>
                 </tr>
             </thead>
             <tbody>
-
+                @foreach($ticket->children as $ticket)
                 <tr>
                     <td>{{ $ticket->subject }}</td>
                     <td>{{ Str::limit($ticket->body, 50) }}</td>
@@ -39,7 +41,33 @@
                     <td>{{ $ticket->user->name }}</td>
                     <td>{{ $ticket->category->name }}</td>
                     <td>{{ $ticket->parent ? $ticket->parent->subject : 'تیکت اصلی' }}</td>
+                    <td>
+                    <div class="d-flex align-items-center">
+                            <div class="mx-2">
+                                <form action="{{ route('admin.tickets.ticket.destroy', $ticket) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            @if($ticket->parent_id != null)
+                                <div class="mx-2">
+                                    <a href="{{ route('admin.tickets.ticket.edit', $ticket) }}"
+                                        class="text-warning">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    </td>
+                    @if($ticket->ticketFile)
+                        <td><a href="{{ $ticket->ticketFile->file_path }}">دانلود</a></td>
+                    @endif
                 </tr>
+                @endforeach
 
 
             </tbody>
@@ -58,7 +86,7 @@
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <input type="hidden" name="parent_id" value="{{ $ticket->id }}">
+                <input type="hidden" name="parent_id" value="{{ $ticket->parent_id ? $ticket->parent_id : $ticket->id }}">
 
 
                 <div class="col-12">
