@@ -29,6 +29,7 @@
                     <th scope="col">دسته بندی</th>
                     <th scope="col">پاسخ به </th>
                     <th scope="col">تنظیمات</th>
+                    <th scope="col">فایل</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,6 +79,9 @@
                             @endif
                         </div>
                     </td>
+                    @if($ticket->ticketFile)
+                        <td><a href="{{ $ticket->ticketFile->file_path }}">دانلود</a></td>
+                    @endif
                 </tr>
                 @endforeach
 
