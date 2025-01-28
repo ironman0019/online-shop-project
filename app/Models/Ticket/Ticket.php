@@ -44,4 +44,10 @@ class Ticket extends Model
     {
         return $this->hasMany($this, 'parent_id');
     }
+
+    // Relation with ticket file
+    public function ticketFile()
+    {
+        return $this->hasOne(TicketFile::class);
+    }
 }
