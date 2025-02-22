@@ -79,6 +79,16 @@
                 <span>منو ها</span>
             </a>
 
+            <a href="{{ route('admin.content.showcase.index') }}" class="sidebar-link">
+                <i class="fas fa-chalkboard"></i>
+                <span>بنر های اصلی</span>
+            </a>
+
+            <a href="{{ route('admin.content.ads-banner.index') }}" class="sidebar-link">
+                <i class="fas fa-bell"></i>
+                <span>بنر های تبلیغاتی</span>
+            </a>
+
             <section class="sidebar-group-link">
                 <section class="sidebar-dropdown-toggle">
                     <i class="fas fa-chart-bar icon"></i>
