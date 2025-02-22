@@ -23,12 +23,12 @@ use App\Http\Controllers\Home\Customer\AddressController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 
 require __DIR__.'/auth.php';
 
-Route::prefix('admin')->name('admin.')->group(function() {
+Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function() {
 
     Route::get('/', DashbordController::class);
 
