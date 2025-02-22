@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Content\AdsBannerController;
 use App\Http\Controllers\Admin\Content\BlogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\Content\MenuController;
 use App\Http\Controllers\Admin\Content\PageController;
 use App\Http\Controllers\Admin\Ticket\TicketController;
 use App\Http\Controllers\Admin\Content\CommentController;
+use App\Http\Controllers\Admin\Content\ShowCaseController;
 use App\Http\Controllers\Admin\DashbordController;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Admin\Market\CoupanController;
@@ -20,10 +22,10 @@ use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Home\Customer\AddressController;
+use App\Http\Controllers\Home\HomeControler;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeControler::class, 'index'])->name('home');
+Route::get('product/{product}/{slug}', [HomeControler::class, 'product'])->name('product.show');
 
 
 require __DIR__.'/auth.php';
@@ -40,6 +42,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
 
     Route::prefix('content')->name('content.')->group(function() {
         Route::resource('menu', MenuController::class);
+        Route::resource('showcase', ShowCaseController::class);
+        Route::resource('ads-banner', AdsBannerController::class);
         Route::resource('faq', FaqController::class);
         Route::resource('page', PageController::class);
         Route::resource('comment', CommentController::class);
