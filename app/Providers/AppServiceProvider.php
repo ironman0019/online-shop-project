@@ -23,6 +23,5 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFour();
 
-        Auth::loginUsingId(1);
     }
 }
