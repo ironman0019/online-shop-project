@@ -1,47 +1,33 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('auth.layouts.master')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+@section('title', 'ثبت نام | ورود')
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+@section('content')
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
+    <section class="vh-100 d-flex justify-content-center align-items-center pb-5">
+        <section class="login-wrapper mb-5">
+            <section class="login-logo">
+                <img src="{{ asset('assets/images/logo/4.png') }}" alt="pic">
+            </section>
+            <section class="login-title">ورود / ثبت نام</section>
+            <form action="{{ route('otp.send') }}" method="POST">
+                @csrf
+                <section class="login-input-text">
+                    <label class="login-info">شماره موبایل یا پست الکترونیک خود را وارد کنید</label>
+                    <input type="text" class="form-control" name="mobile">
+                    @error('mobile')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </section>
+                <section class="login-btn d-grid g-2"><button class="btn btn-danger" type="submit">ورود به آمازون</button></section>
+            </form>
+            <section class="login-terms-and-conditions"><a href="#">شرایط و قوانین</a> را خوانده ام و پذیرفته ام</section>
+            @if (session('error'))
+                <section class="alert alert-danger">
+                    {{ session('error') }}
+                </section>
             @endif
+        </section>
+    </section>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+@endsection
