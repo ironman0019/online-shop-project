@@ -266,9 +266,10 @@
                             <a href="#" class="list-group-item list-group-item-action header-profile-link">
                                 <i class="fas fa-lock"></i>قفل صفحه
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action header-profile-link">
-                                <i class="fas fa-sign-out-alt"></i>خروج
-                            </a>
+                            <form action="{{ route('logout') }}" method="POST" class="m-0 p-0">
+                                @csrf
+                                <button type="submit" class="list-group-item list-group-item-action header-profile-link"><i class="fas fa-sign-out-alt"></i>خروج</button>
+                            </form>
                         </section>
                     </section>
                 </span>
