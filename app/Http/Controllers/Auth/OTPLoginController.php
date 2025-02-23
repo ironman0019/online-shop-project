@@ -98,7 +98,7 @@ class OTPLoginController extends Controller {
         $user = $otp->user;
         Auth::login($user);
 
-        return to_route('home');
+        return redirect()->intended('/');
 
     }
 
