@@ -21,11 +21,21 @@ use App\Http\Controllers\Admin\Market\ProductImageController;
 use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
+use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\Customer\AddressController;
 use App\Http\Controllers\Home\HomeControler;
 
 Route::get('/', [HomeControler::class, 'index'])->name('home');
 Route::get('product/{product}/{slug}', [HomeControler::class, 'product'])->name('product.show');
+
+Route::middleware('auth')->group(function() {
+
+    Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
+    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::post('/comment/create/{product}', [HomeControler::class, 'createComment'])->name('comment.create');
+
+});
 
 
 require __DIR__.'/auth.php';
