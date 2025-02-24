@@ -13,7 +13,9 @@ class CartController extends Controller
 {
     public function showCart()
     {
-
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->id)->where('status', 0)->with('cartItems.product')->first();
+        return view('app.cart', compact('cart'));
     }
 
     public function addToCart($id)
@@ -28,26 +30,63 @@ class CartController extends Controller
 
         $cartItem = CartItem::where('cart_id', $cart->id)->where('product_id', $product->id)->first();
 
-        if($cartItem) {
-            $cartItem->increment('quantity');
-            $cartItem->update(['total_price' => $cartItem->quantity * $product->price]);
+        // First check if product avilable for sale
+        if($cartItem->quantity < $product->marketable_number) {
+            if($cartItem) {
+                $cartItem->increment('quantity');
+                $cartItem->update(['total_price' => $cartItem->quantity * $product->price]);
+            } else {
+                CartItem::create([
+                    'cart_id' => $cart->id,
+                    'product_id' => $product->id,
+                    'quantity' => 1,
+                    'total_price' => $product->price
+                ]);
+            }
         } else {
-            CartItem::create([
-                'cart_id' => $cart->id,
-                'product_id' => $product->id,
-                'quantity' => 1,
-                'total_price' => $product->price
-            ]);
+            return back()->with('error', 'موجودی محصول تمام شد!');
         }
 
-        $totalPrice = CartItem::where('cart_id', $cart->id)->sum('total_price');
-        $cart->update(['total_price' => $totalPrice]);
+
+        $this->updateCartTotalPrice($cart);
 
         return back()->with('success', 'محصول با موفقیت به سبد خرید اضافه شد');
     }
 
-    public function removeFromCart()
+    public function decreaseItem($id)
     {
+        $cartItem = CartItem::findOrFail($id);
+
+        if($cartItem->quantity > 1) {
+            $cartItem->decrement('quantity');
+            $cartItem->update(['total_price' => $cartItem->quantity * $cartItem->product->price]);
+        }
+        else
+        {
+            $this->removeFromCart($id);
+            return back()->with('success', 'محصول با موفقیت حذف شد');
+        }
+
+        $this->updateCartTotalPrice($cartItem->cart);
+        return back()->with('success', 'تعداد محصول کاهش یافت');
+    }
+
+    private function updateCartTotalPrice($cart)
+    {
+        $totalPrice = $cart->cartItems()->sum('total_price');
+        $cart->update(['total_price' =>  $totalPrice]);
+    }
+
+    public function removeFromCart($id)
+    {
+        $cartItem = CartItem::findOrFail($id);
+        $cart = $cartItem->cart;
+
+        $cartItem->delete();
+
+        $this->updateCartTotalPrice($cart);
+
+        return back()->with('success', 'محصول با موفقیت حذف شد');
 
     }
 }
