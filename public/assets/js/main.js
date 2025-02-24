@@ -203,11 +203,11 @@ $(document).ready(function() {
 //start payment
 $(document).ready(function() {
 
-    $('input[name="payment_type"]').change(function(){
+    $('input[name="delivery_type"]').change(function(){
 
-        var payment_type = $('input[name="payment_type"]').is(":checked");
+        var delivery_type = $('input[name="delivery_type"]').is(":checked");
 
-        if(payment_type == true) {
+        if(delivery_type == true) {
             $("#payment-button").removeClass("d-block");
             $("#payment-button").addClass("d-none");
             $("#final-level").removeClass("d-none");
