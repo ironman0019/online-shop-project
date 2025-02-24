@@ -10,4 +10,9 @@ class Coupan extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function isValid()
+    {
+        return $this->status == 1 && now()->between($this->start_date, $this->end_date);
+    }
 }
