@@ -1,3 +1,4 @@
+@section('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap/bootstrap-reboot.rtl.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap/bootstrap.rtl.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
@@ -11,3 +12,4 @@
 <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+@show
