@@ -56,7 +56,7 @@
                             aria-labelledby="dropdownMenuButton1">
                             <section><a class="dropdown-item" href="my-profile.html"><i
                                         class="fa fa-user-circle"></i>پروفایل کاربری</a></section>
-                            <section><a class="dropdown-item" href="my-orders.html"><i
+                            <section><a class="dropdown-item" href="{{ route('profile.my-orders') }}"><i
                                         class="fa fa-newspaper"></i>سفارشات</a></section>
                             <section><a class="dropdown-item" href="my-favorites.html"><i class="fa fa-heart"></i>لیست
                                     علاقه مندی</a></section>
@@ -84,7 +84,7 @@
                                 <a class="text-decoration-none text-info" href="{{ route('cart') }}">مشاهده سبد خرید </a>
                             </section>
                             <section class="header-cart-dropdown-body">
-                                @if(auth()->check())
+                                @if(auth()->check() && $cart)
                                 @foreach($cart->cartItems as $item)
                                 <section
                                     class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
