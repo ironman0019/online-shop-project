@@ -131,7 +131,7 @@
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
                                                     title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
-                                            <a class="product-link" href="#">
+                                            <a class="product-link" href="{{ route('product.show', [$suggestionProduct, $suggestionProduct->slug]) }}">
                                                 <section class="product-image">
                                                     <img class="" src="{{ $suggestionProduct->image }}"
                                                         alt="product_image" width="250px" height="200px">
