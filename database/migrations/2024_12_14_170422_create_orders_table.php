@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('address_id')->constrained('addresses')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('peyment_id')->constrained('peyments')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('delivery_id')->constrained('deliveries')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('coupan_id')->constrained('coupans')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('coupan_id')->nullable()->constrained('coupans')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('cart_id')->constrained('carts')->onDelete('cascade')->onUpdate('cascade');
             $table->text('address_object');
             $table->text('peyment_object');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->tinyInteger('peyment_status')->default(0)->comment('0 => pending, 1 => ok, 2 => faild');
             $table->unsignedBigInteger('delivery_amount')->nullable();
             $table->tinyInteger('delivery_status')->default(0)->comment('0 => pending, 2 => sent, 3 => recived, 4 => refund');
-            $table->timestamp('delivery_date')->nullable();
+            $table->string('delivery_date')->nullable();
             $table->unsignedBigInteger('order_final_amount');
             $table->unsignedBigInteger('order_discount_amount');
             $table->unsignedBigInteger('order_total_discount_amount');
