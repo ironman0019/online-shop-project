@@ -70,7 +70,8 @@
 
                             </section>
 
-
+                            <form action="{{ route('order.store') }}" method="post">
+                                @csrf
                             <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
 
                                 <!-- start vontent header -->
@@ -111,8 +112,40 @@
                                 </section>
                             </section>
 
+                            <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
 
+                                <!-- start vontent header -->
+                                <section class="content-header mb-3">
+                                    <section class="d-flex justify-content-between align-items-center">
+                                        <h2 class="content-header-title content-header-title-small">
+                                            انتخاب آدرس
+                                        </h2>
+                                        <section class="content-header-link">
+                                            <!--<a href="#">مشاهده همه</a>-->
+                                        </section>
+                                    </section>
+                                </section>
+                                <section class="payment-select">
 
+                                    @foreach($user->addresses as $address)
+                                    <input type="radio" name="address_id" value="{{ $address->id }}" id="address_{{$address->id}}" />
+                                    <label for="address_{{$address->id}}" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
+                                        <section class="mb-2">
+                                            <i class="fa fa-calendar-alt mx-1"></i>
+                                            {{ $address->city->province }} || {{ $address->city->city }} ==>>> {{ $address->address }}
+                                        </section>
+                                        <section class="mb-2">
+                                            <i class="fa fa-credit-card mx-1"></i>
+                                            {{ 'کد پستی:' . $address->postal_code  }}
+                                        </section>
+                                    </label>
+                                    @error('address_id')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                    @endforeach
+
+                                </section>
+                            </section>
 
                         </section>
                         <section class="col-md-3">
@@ -143,12 +176,14 @@
                                 <section class="">
                                     <section id="payment-button"
                                         class="text-warning border border-warning text-center py-2 pointer rounded-2 d-block">
-                                        نوع پرداخت را انتخاب کن</section>
-                                    <a id="final-level" href="my-orders.html" class="btn btn-danger d-none">ثبت سفارش </a>
+                                        روش ارسال را انتخاب کن</section>
+                                    <button id="final-level" class="btn btn-danger d-none" type="submit">ثبت سفارش </button>
                                 </section>
+
 
                             </section>
                         </section>
+                    </form>
                     </section>
                 </section>
             </section>
