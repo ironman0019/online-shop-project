@@ -25,7 +25,9 @@
                             </section>
                         </section>
                     </section>
-
+                    @if(!$cart)
+                        <p>سبد خرید شما خالی است</p>
+                    @else
                     <section class="row mt-4">
                         <section class="col-md-9 mb-3">
                             <section class="content-wrapper bg-white p-3 rounded-2">
@@ -104,6 +106,7 @@
                             </section>
                         </section>
                     </section>
+                    @endif
                 </section>
             </section>
 
