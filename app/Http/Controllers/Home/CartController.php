@@ -24,27 +24,30 @@ class CartController extends Controller
         $user = Auth::user();
 
         $cart = Cart::firstOrCreate(
-            ['user_id' => $user->id], 
+            ['user_id' => $user->id, 'status' => 0], 
             ['total_price' => 0, 'total_discount_price' => 0, 'expired_at' => now()->addDays(7)]
         );
 
         $cartItem = CartItem::where('cart_id', $cart->id)->where('product_id', $product->id)->first();
 
-        // First check if product avilable for sale
-        if($cartItem->quantity < $product->marketable_number) {
-            if($cartItem) {
+
+        if ($cartItem) {
+            if($cartItem->quantity < $product->marketable_number) {
                 $cartItem->increment('quantity');
                 $cartItem->update(['total_price' => $cartItem->quantity * $product->price]);
-            } else {
-                CartItem::create([
-                    'cart_id' => $cart->id,
-                    'product_id' => $product->id,
-                    'quantity' => 1,
-                    'total_price' => $product->price
-                ]);
             }
+            else
+            {
+                return back()->with('error', 'موجودی محصول تمام شد');
+            }
+
         } else {
-            return back()->with('error', 'موجودی محصول تمام شد!');
+            CartItem::create([
+                'cart_id' => $cart->id,
+                'product_id' => $product->id,
+                'quantity' => 1,
+                'total_price' => $product->price
+            ]);
         }
 
 
