@@ -21,13 +21,9 @@ class CheckoutController extends Controller
             return to_route('home');
         }
 
-        return view('app.checkout', compact('cart', 'deliveries'));
+        return view('app.checkout', compact('cart', 'deliveries', 'user'));
     }
 
-    public function complete()
-    {
-
-    }
 
     public function applyDiscount(Request $request)
     {
