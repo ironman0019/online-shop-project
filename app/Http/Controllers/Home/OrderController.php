@@ -79,7 +79,7 @@ class OrderController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Something went wrong' . $e->getMessage());
+            return back()->with('error', 'Something went wrong');
         }
 
 
