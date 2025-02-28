@@ -24,7 +24,10 @@ use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CheckoutController;
 use App\Http\Controllers\Home\Customer\AddressController;
+use App\Http\Controllers\Home\Customer\OrderController as CustomerOrderController;
+use App\Http\Controllers\Home\Customer\ProfileController as CustomerProfileController;
 use App\Http\Controllers\Home\HomeControler;
+use App\Http\Controllers\Home\OrderController;
 
 Route::get('/', [HomeControler::class, 'index'])->name('home');
 Route::get('product/{product}/{slug}', [HomeControler::class, 'product'])->name('product.show');
@@ -40,8 +43,20 @@ Route::middleware('auth')->group(function() {
 
     // checkout routes
     Route::get('checkout', [CheckoutController::class, 'show'])->name('checkout');
-    Route::post('checkout/complete', [CheckoutController::class, 'complete'])->name('checkout.complete');
     Route::post('checkout/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.apply-discount');
+
+    // order routes
+    Route::post('order/store', [OrderController::class, 'orderStore'])->name('order.store');
+
+    // user dashbord routes
+    Route::resource('address', AddressController::class);
+
+
+});
+
+
+Route::middleware('auth')->prefix('profile')->name('profile.')->group(function() {
+    Route::get('/my-orders', [CustomerOrderController::class, 'index'])->name('my-orders');
 
 });
 
