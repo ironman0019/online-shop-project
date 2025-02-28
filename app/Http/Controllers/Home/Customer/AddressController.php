@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\User\Address;
+use App\Models\User\City;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -13,7 +14,9 @@ class AddressController extends Controller
      */
     public function index()
     {
-        //
+        $addresses = Address::where('user_id', auth()->user()->id)->with('city')->get();
+
+        return view('app.profile.addresses', compact('addresses'));
     }
 
     /**
@@ -21,7 +24,8 @@ class AddressController extends Controller
      */
     public function create()
     {
-        //
+        $cities = City::all();
+        return view('app.profile.address-create', compact('cities'));
     }
 
     /**
@@ -29,7 +33,16 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->validate([
+            'address' => 'required|string|max:255',
+            'postal_code' => 'required|integer',
+            'city_id' => 'required|exists:cities,id'
+        ]);
+
+        $inputs['user_id'] = auth()->user()->id;
+
+        Address::create($inputs);
+        return to_route('home')->with('success', 'ادرس اضافه شد');
     }
 
     /**
@@ -61,6 +74,7 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
-        //
+        $address->delete();
+        return to_route('home');
     }
 }
